@@ -1,29 +1,38 @@
 const axios = require("axios");
-const { Raza, Temperamento } = require("../db.js");
-// const { conn } = require("../db.js");
-
-// console.log(conn);
+const { Raza, Temperamento } = require("../db");
 
 module.exports = async function fulldb() {
-  const api = await axios.get("https://api.thedogapi.com/v1/breeds");
+  let api = await axios.get(" https://api.thedogapi.com/v1/breeds");
 
-  Promise.all(
-    api.data.map((x) => {
-      //console.log(x.temperament);
-      Raza.create({
-        id: x.id,
-        name: x.name,
-        weight: x.weight.metric,
-        height: x.height.metric,
-        life_span: x.life_span,
-        imagen: x.image.url,
-      });
-      Temperamento.create({
-        temperament: x.temperament,
-      });
-    })
-  ).then((res) => {
-    console.log("models precargadas");
+  let temperamentos = api.data.map((x) => x.temperament);
+  temperamentos = temperamentos.join().split(",");
+
+  temperamentos = temperamentos.map((x) => x.trim());
+  var arrayTemperamentos = new Set(temperamentos);
+  arrayTemperamentos = [...arrayTemperamentos];
+
+  await arrayTemperamentos.map((x) => {
+    Temperamento.create({
+      nombre: x,
+    });
   });
-  // console.log(temperamentos);
+
+  api.data.map(async (x) => {
+    const raza = await Raza.create({
+      nombre: x.name.toLowerCase(),
+      peso: x.weight.metric,
+      altura: x.height.metric,
+      años_de_vida: x.life_span,
+      imagen: x.image.url,
+    });
+    if (x.temperament) {
+      array = x.temperament.split(",").map((x) => x.trim());
+      const tempx = await Temperamento.findAll({
+        where: {
+          nombre: array,
+        },
+      });
+      raza.setTemperamentos(tempx);
+    }
+  });
 };

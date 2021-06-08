@@ -2,6 +2,7 @@ require("dotenv").config();
 const { Sequelize } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
+const { Console } = require("console");
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 
 const sequelize = new Sequelize(
@@ -38,13 +39,29 @@ sequelize.models = Object.fromEntries(capsEntries);
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
 const { Dog, Raza, Temperamento } = sequelize.models;
-console.log(Dog, Raza, Temperamento);
+//console.log(Dog, Raza, Temperamento);
 
 // Aca vendrian las relaciones
 Raza.belongsToMany(Temperamento, { through: "raza_temperamento" });
 Temperamento.belongsToMany(Raza, { through: "raza_temperamento" });
-// Product.hasMany(Reviews);
 
+// Product.hasMany(Reviews);
+//_______________________________________________________
+//console.log(Temperamento.findAll().then());
+// let array =
+//   "Friendly, Assertive, Energetic, Loyal, Gentle, Confident, Dominant";
+// array = array.split(",").map((x) => x.trim());
+// console.log(array, "array");
+// Temperamento.findAll({
+//   where: {
+//     nombre: array,
+//   },
+// })
+//   .then((res) => Raza.setTemperamento(res))
+//   .then((res) => console.log(res))
+//   .catch((err) => console.log(err));
+
+//_________________________________________________________
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize, // para importart la conexión { conn } = require('./db.js');

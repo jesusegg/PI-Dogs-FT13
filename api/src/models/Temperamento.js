@@ -5,8 +5,14 @@ module.exports = (sequelize) => {
   // defino el modelo
 
   sequelize.define("temperamento", {
-    temperament: {
+    nombre: {
       type: DataTypes.STRING,
     },
   });
 };
+
+// Page.addHook('beforeValidate', (page) => {
+//   if(page.title) {
+//     page.urlTitle = page.title.replace(/\s+/g, '_').replace(/\W/g, '');
+//   }
+// })

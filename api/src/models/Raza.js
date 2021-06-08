@@ -9,19 +9,19 @@ module.exports = (sequelize) => {
     //   type: DataTypes.,
     //   primaryKey: true,
     // },
-    name: {
+    nombre: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    weight: {
+    peso: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    height: {
+    altura: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    life_span: {
+    años_de_vida: {
       type: DataTypes.STRING,
     },
     imagen: {
