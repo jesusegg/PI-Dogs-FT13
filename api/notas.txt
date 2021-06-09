@@ -1,4 +1,0 @@
-cuando se ordena alfabeticamente y por peso se agregan los datos a la bd?
-cuando se agrega un perro nuevo se usa la tabla intermedia?
-1 filtro desde el front?
-botones para filtrar muchas opciones?
