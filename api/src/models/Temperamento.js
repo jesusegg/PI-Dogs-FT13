@@ -10,9 +10,3 @@ module.exports = (sequelize) => {
     },
   });
 };
-
-// Page.addHook('beforeValidate', (page) => {
-//   if(page.title) {
-//     page.urlTitle = page.title.replace(/\s+/g, '_').replace(/\W/g, '');
-//   }
-// })

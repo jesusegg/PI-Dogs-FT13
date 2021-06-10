@@ -1,17 +1,58 @@
+const axios = require("axios");
+
 const filtroRazas = function (busqueda) {
-  busqueda.rows.map((x) =>
-    x.temperamentos.map((y) => delete y.dataValues.raza_temperamento)
-  );
+  const objOrdenado = [];
+  busqueda.rows.map((x) => {
+    objOrdenado.push({
+      id: x.id,
+      nombre: x.nombre,
+      imagen: x.imagen,
+      temperamentos: x.temperamentos.map((y) => y.dataValues.nombre),
+    });
+  });
+  return objOrdenado;
+};
+const filtroRazasCompletas = function (busqueda) {
+  const objOrdenado = [];
+  busqueda.rows.map((x) => {
+    objOrdenado.push({
+      id: x.id,
+      nombre: x.nombre,
+      peso: x.peso,
+      altura: x.altura,
+      años_de_vida: x.años_de_vida,
+      imagen: x.imagen,
+      temperamentos: x.temperamentos.map((y) => y.dataValues.nombre),
+    });
+  });
+  return objOrdenado;
 };
 
-const filtroNombres = function (busqueda) {
-  busqueda.map((x) =>
-    x.temperamentos.map((y) => delete y.dataValues.raza_temperamento)
-  );
+const arrayApi = async function () {
+  let arrayApi = [];
+  const api = await axios.get("https://api.thedogapi.com/v1/breeds");
+
+  api.data.map((x) => {
+    var arrayTemp = x.temperament;
+    if (arrayTemp) {
+      arrayTemp = arrayTemp.split(",");
+    }
+
+    arrayApi.push({
+      id: x.id,
+      nombre: x.name.toLowerCase(),
+      peso: x.weight.metric,
+      altura: x.height.metric,
+      años_de_vida: x.life_span,
+      imagen: x.image.url,
+      temperamentos: arrayTemp,
+    });
+  });
+  return arrayApi;
 };
 
-const filtroNombre = function (busqueda) {
-  busqueda.temperamentos.map((y) => delete y.dataValues.raza_temperamento);
+module.exports = {
+  filtroRazas,
+  filtroRazasCompletas,
+  arrayApi,
 };
-
-module.exports = { filtroRazas, filtroNombres, filtroNombre };

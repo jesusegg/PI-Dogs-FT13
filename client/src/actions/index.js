@@ -11,6 +11,7 @@ export const addTodo = (payload) => {
   };
 };
 
+//estado de paginado
 export function getRazasPaginado(page) {
   return function (dispatch) {
     return fetch("http://localhost:3001/dogs/?page=" + page)
@@ -21,6 +22,7 @@ export function getRazasPaginado(page) {
   };
 }
 
+//estado de grear perro
 export function postRaza(data) {
   return function (dispatch) {
     return fetch("http://localhost:3001/dog", {

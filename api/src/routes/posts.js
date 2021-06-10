@@ -1,13 +1,14 @@
 const { Router } = require("express");
 const { Raza, Temperamento } = require("../db");
+const { v4: uuidv4 } = require("uuid");
 
 const server = Router();
 
-server.post("/dog", async (req, res) => {
+server.post("/", async (req, res) => {
   const { nombre, altura, peso, años_de_vida, temperamentos } = req.body;
-  //console.log(req.body.años_de_vida);
 
   const razaNueva = await Raza.create({
+    id: uuidv4(),
     nombre: nombre.toLowerCase(),
     peso: peso,
     altura: altura,

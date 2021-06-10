@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { Raza, Temperamento } = require("../db");
+const { Temperamento } = require("../db");
 
 module.exports = async function fulldb() {
   let api = await axios.get(" https://api.thedogapi.com/v1/breeds");
@@ -18,13 +18,6 @@ module.exports = async function fulldb() {
   });
 
   api.data.map(async (x) => {
-    const raza = await Raza.create({
-      nombre: x.name.toLowerCase(),
-      peso: x.weight.metric,
-      altura: x.height.metric,
-      años_de_vida: x.life_span,
-      imagen: x.image.url,
-    });
     if (x.temperament) {
       array = x.temperament.split(",").map((x) => x.trim());
       const tempx = await Temperamento.findAll({
@@ -32,7 +25,6 @@ module.exports = async function fulldb() {
           nombre: array,
         },
       });
-      raza.setTemperamentos(tempx);
     }
   });
 };
