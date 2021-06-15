@@ -1,4 +1,5 @@
 const axios = require("axios");
+const { Temperamento, Raza } = require("../db");
 
 const filtroRazas = function (busqueda) {
   const objOrdenado = [];
@@ -51,8 +52,44 @@ const arrayApi = async function () {
   return arrayApi;
 };
 
+const dataCompleta = async function () {
+  const array = await arrayApi();
+
+  let raza = await Raza.findAndCountAll({
+    include: [
+      {
+        model: Temperamento,
+        required: true,
+        attributes: ["nombre"],
+      },
+    ],
+    order: [["nombre"]],
+  });
+
+  raza = filtroRazasCompletas(raza);
+  return (JsonPrincipal = [...array, ...raza]);
+};
+const paginado = function (req, res, data) {
+  const pageCount = Math.ceil(data.length / 8);
+  let page = parseInt(req.query.page);
+  if (!page) {
+    page = 1;
+  }
+  if (page > pageCount) {
+    page = pageCount;
+  }
+
+  return res.json({
+    page: page,
+    pageCount: pageCount,
+    posts: data.slice(page * 8 - 8, page * 8),
+  });
+};
+
 module.exports = {
   filtroRazas,
   filtroRazasCompletas,
   arrayApi,
+  dataCompleta,
+  paginado,
 };

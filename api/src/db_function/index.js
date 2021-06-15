@@ -17,14 +17,14 @@ module.exports = async function fulldb() {
     });
   });
 
-  api.data.map(async (x) => {
-    if (x.temperament) {
-      array = x.temperament.split(",").map((x) => x.trim());
-      const tempx = await Temperamento.findAll({
-        where: {
-          nombre: array,
-        },
-      });
-    }
-  });
+  // api.data.map(async (x) => {
+  //   if (x.temperament) {
+  //     array = x.temperament.split(",").map((x) => x.trim());
+  //     const tempx = await Temperamento.findAll({
+  //       where: {
+  //         nombre: array,
+  //       },
+  //     });
+  //   }
+  // });
 };
