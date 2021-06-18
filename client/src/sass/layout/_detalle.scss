@@ -1,0 +1,51 @@
+.detalle {
+  height: 100vh;
+  background-color: $colorFondo;
+  padding-top: 10rem;
+}
+.detalle__contenedor {
+  margin: 0 auto;
+  height: 40rem;
+  width: 90%;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  border-bottom-right-radius: 2rem;
+  border-top-right-radius: 2rem;
+
+  .detalle__imagen {
+    height: 40rem;
+    border: 0.5rem solid $colorTarjeta;
+  }
+  .detalle__datos__temperamentos {
+    background-color: $colorTarjeta;
+    width: 96%;
+    border-radius: 2rem;
+    font-family: $fuente_principal;
+    padding: 0.2rem;
+    margin-top: 1rem;
+
+    p {
+      margin: 1.5rem;
+      line-height: 1.5;
+    }
+  }
+
+  .detalle__datos {
+    background-color: $colorTarjeta;
+    padding: 0.2rem;
+    margin-top: 1rem;
+    font-family: $fuente_principal;
+    width: 96%;
+    border-radius: 2rem;
+
+    .detalle__datos__titulo {
+      font-weight: $bold;
+      font-size: 3rem;
+    }
+    p {
+      margin: 2.5rem;
+    }
+  }
+}

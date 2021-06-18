@@ -1,0 +1,20 @@
+.landing {
+  width: 100%;
+  height: 100vh;
+  background-image: url("../../img/foto-landing.jpg");
+  background-size: cover;
+  background-position: center;
+  .boton--landing {
+    margin: 40% auto;
+    background-color: $colorFondo;
+    font-family: $fuente_principal;
+    font-weight: $bold;
+  }
+}
+
+.boton {
+  padding: 0.8rem 3rem;
+  border-radius: 0.5rem;
+  border-style: none;
+  cursor: pointer;
+}

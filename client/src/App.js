@@ -17,7 +17,7 @@ function App() {
       {/* home */}
       <Route exact path="/Dogs/home" component={Home} />
       {/* detalle */}
-      <Route exact path="/Dogs/detalle" component={Detalle} />
+      <Route exact path="/Dogs/detalle/:id" component={Detalle} />
       {/* creacion perro */}
       <Route exact path="/Dogs/Create" component={CreacionRaza} />
     </div>

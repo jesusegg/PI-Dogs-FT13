@@ -1,0 +1,30 @@
+.ordenamientos {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 1rem;
+  margin-left: 1rem;
+  width: 98%;
+
+  .ordenamientos__tarjeta {
+    border-radius: 2rem;
+    background-color: $colorTarjeta;
+    transition: transform 450ms;
+
+    a {
+      font-size: 1.6rem;
+      font-family: $fuente_principal;
+      color: black;
+      font-weight: $bold;
+    }
+
+    p {
+      width: 95%;
+      font-size: 1.6rem;
+    }
+  }
+  .ordenamientos__tarjeta:hover {
+    transform: scale(1.04);
+    opacity: 1;
+  }
+}

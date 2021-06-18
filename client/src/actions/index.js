@@ -74,6 +74,12 @@ export function getRazaDetail(id) {
       });
   };
 }
+export function cleardetalle() {
+  return {
+    type: "GET_RAZA_DETAIL",
+    payload: undefined,
+  };
+}
 
 //estado de temperamentos lista
 export function getTemperamentosLista(busqueda, page) {
@@ -85,6 +91,13 @@ export function getTemperamentosLista(busqueda, page) {
       .then((json) => {
         dispatch({ type: "GET_TEMPERAMENTOS_LISTA", payload: json });
       });
+  };
+}
+
+export function clearTemperamentos() {
+  return {
+    type: "GET_TEMPERAMENTOS_LISTA",
+    payload: undefined,
   };
 }
 

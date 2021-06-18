@@ -1,0 +1,54 @@
+.home {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  padding-top: 2rem;
+  padding-bottom: 8rem;
+  background-color: $colorFondo;
+  .home__formulario {
+    background-color: $colorNavegacion;
+    height: 82rem;
+
+    .home__formulario__input {
+      display: flex;
+      justify-content: center;
+      margin: 4rem 1rem;
+      // width: ;
+    }
+    .home__formulario__ordenamientos {
+      display: flex;
+      flex-direction: column;
+      margin: 1rem 10%;
+      font-family: $fuente_principal;
+
+      label {
+        display: flex;
+        margin: 0.6rem;
+        align-items: flex-start;
+        color: white;
+      }
+      select {
+        font-size: 1.4rem;
+        margin: 1rem;
+      }
+    }
+  }
+  .paginado {
+    grid-column: 2/3;
+    //margin-left: 80%;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 98%;
+    gap: 1rem;
+  }
+  .boton-home {
+    width: 75%;
+    margin-left: 1rem;
+  }
+  .boton-lupa {
+    background-color: transparent;
+    border-style: none;
+    cursor: pointer;
+  }
+}

@@ -1,18 +1,25 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import logo from "../img/logo perros.png";
 
 function Navegacion() {
   return (
-    <div>
+    <div className="navegacion">
       <Link to="/Dogs/Home">
-        <p>Home</p>
+        <img src={logo} alt="" width="230" height="90" />
       </Link>
-      <Link to="/Dogs/Create">
-        <p>Create your Dog</p>
-      </Link>
-      <Link to="/Dogs/SingIn">
-        <p>Sign In</p>
-      </Link>
+
+      <div className="navegacion__enlaces">
+        <Link to="/Dogs/Home">
+          <p>Home</p>
+        </Link>
+        <Link to="/Dogs/Create">
+          <p>Create your Dog</p>
+        </Link>
+        <Link to="/Dogs/SingIn">
+          <p>Sign In</p>
+        </Link>
+      </div>
     </div>
   );
 }

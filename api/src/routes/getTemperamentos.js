@@ -13,6 +13,7 @@ server.get("/", async (req, res) => {
     if (!JsonPrincipal) {
       res.status(404).json("error en la base de datos");
     }
+    JsonPrincipal.forEach((x) => delete x.peso);
 
     const a = JsonPrincipal.filter((x) =>
       x.temperamentos?.includes(` ${req.query.busqueda}`)
