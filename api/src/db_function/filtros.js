@@ -8,6 +8,7 @@ const filtroRazas = function (busqueda) {
       id: x.id,
       nombre: x.nombre,
       imagen: x.imagen,
+      peso: x.peso,
       temperamentos: x.temperamentos.map((y) => y.dataValues.nombre),
     });
   });
@@ -85,6 +86,41 @@ const paginado = function (req, res, data) {
     posts: data.slice(page * 8 - 8, page * 8),
   });
 };
+const ordenDescendente = function (data) {
+  data.sort(function (a, b) {
+    if (b.nombre > a.nombre) {
+      return 1;
+    }
+    if (b.nombre < a.nombre) {
+      return -1;
+    }
+    return 0;
+  });
+};
+const ordenPeso = function (req, data) {
+  data.forEach((x) => (x.peso = x.peso.split("-").map((y) => parseInt(y))));
+  // http://localhost:3001/dogs/?page=2&peso=Asc ruta para orden peso y paginado
+  // http://localhost:3001/dogs/?page=2&peso=Des ruta para orden peso y paginado
+
+  if (req.query.peso === "Asc") {
+    data.sort(function (a, b) {
+      return a.peso[0] - b.peso[0];
+    });
+    data.forEach(
+      (x) =>
+        (x.peso = `${x.peso[0]} -  ${x.peso[1] ? x.peso[1] : x.peso[0] + 1}`)
+    );
+  }
+  if (req.query.peso === "Des") {
+    data.sort(function (a, b) {
+      return b.peso[0] - a.peso[0];
+    });
+    data.forEach(
+      (x) =>
+        (x.peso = `${x.peso[0]} - ${x.peso[1] ? x.peso[1] : x.peso[0] + 1}`)
+    );
+  }
+};
 
 module.exports = {
   filtroRazas,
@@ -92,4 +128,6 @@ module.exports = {
   arrayApi,
   dataCompleta,
   paginado,
+  ordenDescendente,
+  ordenPeso,
 };

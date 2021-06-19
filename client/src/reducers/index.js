@@ -17,28 +17,6 @@ const reducer = (state = initialState, { type, payload }) => {
         datosPaginado: payload,
       };
 
-    case "GET_PAGINADO_DES":
-      return {
-        ...state,
-        datosPaginadoDes: payload,
-      };
-    case "GET_PESO_MAYOR":
-      return {
-        ...state,
-        datosPesoMayor: payload,
-      };
-    case "GET_PESO_MENOR":
-      return {
-        ...state,
-        datosPesoMenor: payload,
-      };
-
-    case "GET_RAZA_PERROS":
-      return {
-        ...state,
-        datosBusquedaRazas: payload,
-      };
-
     case "GET_RAZA_DETAIL":
       return {
         ...state,
@@ -55,6 +33,11 @@ const reducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         temperamentosLista: payload,
+      };
+    case "GET_ORDENAMIENTOS":
+      return {
+        ...state,
+        ordenamientos: payload,
       };
 
     case "POST_RAZA":

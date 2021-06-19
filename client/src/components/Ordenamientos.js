@@ -29,7 +29,7 @@ function Ordenamientos({ datos }) {
             >
               <p>{x.nombre.toUpperCase()}</p>
             </Link>
-            {x.peso && <p>{x.peso} Kg</p>}
+            {x.peso.includes("-") && <p>{x.peso} Kg</p>}
             <p>{x.temperamentos}</p>
           </div>
         ))

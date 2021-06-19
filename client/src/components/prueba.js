@@ -9,35 +9,44 @@ import { AiFillFunnelPlot } from "react-icons/ai";
 import {
   getRazasPaginado,
   getTemperamentos,
+  getRazaPerros,
   getDatosCompletos,
   getTemperamentosLista,
+  getPaginadoDes,
+  getPesoMayor,
+  getPesoMenor,
   clearTemperamentos,
   getOrdenamientos,
-  clearOrdenamientos,
 } from "../actions/index";
 
 function Home() {
-  const dispatch = useDispatch();
   const [razas, setRazas] = useState({
     ordenamientos: true,
     busqueda: false,
     busquedaTemperamentos: false,
   });
+  const dispatch = useDispatch();
   const [paginado, setPaginado] = useState(1);
-  const refInput = useRef(null);
-  const refRazaSelect = useRef(null);
-  const refRazaTemperamentos = useRef(null);
-  const refOrdenamientos = useRef(null);
-  const refSelect = useRef(null);
-
-  const datosOrdamientos = useSelector((state) => state.ordenamientos);
+  // const [paginaFinal, setPaginaFinal] = useState(false);
   const datos = useSelector((state) => state.datosCompletos);
   const datosPaginado = useSelector((state) => state.datosPaginado);
   const datosTemperamentos = useSelector((state) => state.temperamentos);
   const datosTemperamentoslista = useSelector(
     (state) => state.temperamentosLista
   );
+  const datosBusquedaNombre = useSelector((state) => state.datosBusquedaRazas);
+  const datosOrdenDes = useSelector((state) => state.datosPaginadoDes);
+  const datosPesoMayor = useSelector((state) => state.datosPesoMayor);
+  const datosPesoMenor = useSelector((state) => state.datosPesoMenor);
+  const datosOrdamientos = useSelector((state) => state.ordenamientos); //nuevooooo
 
+  const refInput = useRef(null);
+  const refRazaSelect = useRef(null);
+  const refRazaTemperamentos = useRef(null);
+  const refOrdenamientos = useRef(null);
+  const refSelect = useRef(null);
+
+  console.log(refRazaTemperamentos.current?.value);
   function setRazasValue(e, value) {
     setRazas({
       ordenamientos: false,
@@ -57,12 +66,33 @@ function Home() {
       setPaginado(paginado - 1);
     }
   }
+
   const resultadoRazaLista = findRazaLista(
     razas.busqueda === "Creadas por mi" ? datos : datosPaginado?.posts,
     razas.busqueda
   );
-
+  console.log(refInput.current?.value); //4564654654654654646546546546546546464646546
   useEffect(() => {
+    // dispatch(
+    //   getOrdenamientos(
+    //     `${razas.busquedaNombre}`,
+    //     `${paginado}`,
+    //     `${
+    //       refOrdenamientos === "Name A-Z"
+    //         ? "Asc"
+    //         : refOrdenamientos === "Name Z-A"
+    //         ? "Des"
+    //         : undefined
+    //     }`,
+    //     `${
+    //       refOrdenamientos === "Peso Mayor"
+    //         ? "Asc"
+    //         : refOrdenamientos === "peso Menor"
+    //         ? "Des"
+    //         : undefined
+    //     }`
+    //   )
+    // );
     dispatch(
       getOrdenamientos(
         `${refInput.current.value}`,
@@ -83,6 +113,8 @@ function Home() {
         }`
       )
     );
+    razas.busquedaNombre &&
+      dispatch(getRazaPerros(razas.busquedaNombre, `${paginado}`));
 
     razas.busqueda && dispatch(getDatosCompletos(`${paginado}`));
 
@@ -107,12 +139,16 @@ function Home() {
       )
     );
 
+    razas.ordenDes && dispatch(getPaginadoDes(`${paginado}`));
+
+    razas.pesoMayor && dispatch(getPesoMayor(`${paginado}`));
+
+    razas.pesoMenor && dispatch(getPesoMenor(`${paginado}`));
     dispatch(getRazasPaginado(`${paginado}`));
     dispatch(getTemperamentos());
     dispatch(getDatosCompletos());
     return () => {
       dispatch(clearTemperamentos());
-      dispatch(clearOrdenamientos());
     };
   }, [dispatch, paginado, razas]);
 
@@ -132,6 +168,7 @@ function Home() {
             name="ordenamientos"
             onClick={() => {
               refInput.current.value &&
+                // setRazasValue(e, refRazaSelect.current.value)
                 setRazas({
                   ordenamientos: true,
                   busqueda: false,
@@ -169,6 +206,7 @@ function Home() {
               refRazaTemperamentos.current.value = "DEFAULT";
               refOrdenamientos.current.value = "Name A-Z";
               refInput.current.value = "";
+              // refOrdenamientos.current.value = "DEFAULT";
             }}
           >
             Apply Filter
@@ -200,10 +238,17 @@ function Home() {
             onClick={(e) => {
               refRazaTemperamentos.current.value !== "DEFAULT" &&
                 setRazasValue(e, true);
+              // setRazas({
+              //   ordenamientos: false,
+              //   busqueda: false,
+              //   busquedaTemperamentos: true,
+              // });
               refInput.current.value = "";
               setPaginado(1);
               refOrdenamientos.current.value = "Name A-Z";
               refRazaSelect.current.value = "DEFAULT";
+              // refRazaSelect.current.value = "DEFAULT";
+              // refOrdenamientos.current.value = "DEFAULT";
             }}
           >
             Apply Filter
@@ -241,6 +286,8 @@ function Home() {
               refOrdenamientos.current.value !== "DEFAULT" &&
                 setRazasValue(e, refOrdenamientos.current.value);
               setPaginado(1);
+              // refRazaSelect.current.value = "DEFAULT";
+              // refRazaTemperamentos.current.value = "DEFAULT";
             }}
           >
             Apply Order
@@ -249,13 +296,17 @@ function Home() {
       </div>
       <div className="home__render">
         {razas.busqueda && <BuquedaRazaLista data={resultadoRazaLista} />}
+        {razas.ordenAsc && <Ordenamientos datos={datosPaginado} />}
+        {razas.busquedaNombre && <Ordenamientos datos={datosBusquedaNombre} />}
         {razas.busquedaTemperamentos && (
           <Ordenamientos datos={datosTemperamentoslista} />
         )}
+
         {razas.ordenamientos && <Ordenamientos datos={datosOrdamientos} />}
       </div>
       <div className=" paginado">
         <span style={{ color: "black", fontWeight: "bold" }}>
+          {" "}
           {`PAGE ${paginado}`}
         </span>
         {paginado !== 1 && (
@@ -266,6 +317,7 @@ function Home() {
             Previous
           </button>
         )}
+
         <button
           className="boton boton--paginado"
           onClick={() =>

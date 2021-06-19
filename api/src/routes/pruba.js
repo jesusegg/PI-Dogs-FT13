@@ -6,8 +6,6 @@ const {
   arrayApi,
   paginado,
   dataCompleta,
-  ordenDescendente,
-  ordenPeso,
 } = require("../db_function/filtros");
 
 const server = Router();
@@ -27,7 +25,6 @@ server.get("/", async (req, res) => {
       nombre: x.nombre.toLowerCase(),
       imagen: x.imagen,
       temperamentos: x.temperamentos,
-      peso: x.peso,
     });
   });
 
@@ -40,7 +37,7 @@ server.get("/", async (req, res) => {
       },
     ],
     order: [["nombre"]],
-    attributes: ["id", "nombre", "peso", "imagen"],
+    attributes: ["id", "nombre", "imagen"],
   });
   raza = filtroRazas(raza);
 
@@ -50,13 +47,6 @@ server.get("/", async (req, res) => {
     const filterByRaza = JsonPrincipal.filter((x) =>
       x.nombre.toLowerCase()?.includes(req.query.raza)
     );
-    if (req.query.listado === "Des") {
-      ordenDescendente(filterByRaza);
-    }
-    if (req.query.peso) {
-      ordenPeso(req, filterByRaza);
-    }
-
     if (!filterByRaza.length) {
       return res.status(404).json("raza de perro no encontrada");
     } else {
@@ -64,47 +54,39 @@ server.get("/", async (req, res) => {
       // return res.json(filterByRaza.slice(0, 8));
     }
   }
-  //console.log(JsonPrincipal, "bolaa");
-  if (req.query.peso) {
-    //   JsonPrincipal.forEach(
-    //     (x) => (x.peso = x.peso.split("-").map((y) => parseInt(y)))
-    //   );
-    //   // http://localhost:3001/dogs/?page=2&peso=Asc ruta para orden peso y paginado
-    //   // http://localhost:3001/dogs/?page=2&peso=Des ruta para orden peso y paginado
 
-    //   if (req.query.peso === "Asc") {
-    //     JsonPrincipal.sort(function (a, b) {
-    //       return a.peso[0] - b.peso[0];
-    //     });
-    //     JsonPrincipal.forEach((x) => (x.peso = `${x.peso[0]} - ${x.peso[1]}`));
-    //   }
-    //   if (req.query.peso === "Des") {
-    //     JsonPrincipal.sort(function (a, b) {
-    //       return b.peso[0] - a.peso[0];
-    //     });
-    //     JsonPrincipal.forEach((x) => (x.peso = `${x.peso[0]} - ${x.peso[1]}`));
-    //   }
-    if (req.query.listado === "Des") {
-      ordenDescendente(JsonPrincipal);
+  if (req.query.peso) {
+    array.forEach((x) => (x.peso = x.peso.split("-").map((y) => parseInt(y))));
+    // http://localhost:3001/dogs/?page=2&peso=Asc ruta para orden peso y paginado
+    // http://localhost:3001/dogs/?page=2&peso=Des ruta para orden peso y paginado
+
+    if (req.query.peso === "Asc") {
+      array.sort(function (a, b) {
+        return a.peso[0] - b.peso[0];
+      });
+      array.forEach((x) => (x.peso = `${x.peso[0]} - ${x.peso[1]}`));
     }
-    ordenPeso(req, JsonPrincipal);
-    return paginado(req, res, JsonPrincipal); //dentro del if para retornar req.query.peso
+    if (req.query.peso === "Des") {
+      array.sort(function (a, b) {
+        return b.peso[0] - a.peso[0];
+      });
+      array.forEach((x) => (x.peso = `${x.peso[0]} - ${x.peso[1]}`));
+    }
+
+    return paginado(req, res, array);
   }
 
-  // if (req.query.listado === "Des") {
-  //   JsonPrincipal.sort(function (a, b) {
-  //     if (b.nombre > a.nombre) {
-  //       return 1;
-  //     }
-  //     if (b.nombre < a.nombre) {
-  //       return -1;
-  //     }
-  //     return 0;
-  //   });
-  //   // http://localhost:3001/dogs?listado=Des&page=2 ruta de ordenado descendente
-  // }
   if (req.query.listado === "Des") {
-    ordenDescendente(JsonPrincipal);
+    JsonPrincipal.sort(function (a, b) {
+      if (b.nombre > a.nombre) {
+        return 1;
+      }
+      if (b.nombre < a.nombre) {
+        return -1;
+      }
+      return 0;
+    });
+    // http://localhost:3001/dogs?listado=Des&page=2 ruta de ordenado descendente
   }
 
   paginado(req, res, JsonPrincipal);
