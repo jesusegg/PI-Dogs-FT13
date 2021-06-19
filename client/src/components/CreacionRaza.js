@@ -18,12 +18,22 @@ function CreacionRaza() {
     inputTexto: false,
     pesoGeneral: false,
     alturaGeneral: false,
+    temp: false,
     input: false,
   });
 
   const datosTemperamentos = useSelector((state) => state.temperamentos);
   let datos = useSelector((state) => state.datosCompletos);
   let datosNuevo = datos?.map((x) => x.nombre);
+
+  if (error.temp) {
+    setTimeout(() => {
+      setError({
+        ...error,
+        temp: false,
+      });
+    }, 2000);
+  }
 
   function validate() {
     if (refInputTexto.current.value) {
@@ -104,6 +114,7 @@ function CreacionRaza() {
   }
   function submit(e) {
     e.preventDefault();
+
     if (error.pesoGeneral || error.temperamentos || error.alturaGeneral) {
       setError({
         ...error,
@@ -144,82 +155,121 @@ function CreacionRaza() {
     // }
   }, [dispatch]);
   return (
-    <div>
-      <form>
-        <label>Nombre de la raza</label>
-        <input ref={refInputTexto} type="text" onChange={() => validate()} />
-        {error.inputTexto && <p>raza ya existe en la base de datos</p>}
-        <label>Peso(Kg):</label>
-        <input
-          ref={refpesoMin}
-          type="number"
-          min="1"
-          max="80"
-          onChange={() => validate()}
-        />
-        <label>Min</label>
-        <input
-          ref={refpesoMax}
-          type="number"
-          min="2"
-          max="80"
-          onChange={() => validate()}
-        />
-        <label>Max</label>
-        <label>Altura(Cm):</label>
-        <input
-          ref={refAlturaMin}
-          type="number"
-          min="20"
-          max="85"
-          onChange={() => validate()}
-        />
-        <label>Min</label>
-        <input
-          ref={refAlturaMax}
-          type="number"
-          min="21"
-          max="85"
-          onChange={() => validate()}
-        />
-        <label>Max</label>
-        <label>Esperanza de vida promedio(Años)</label>
-        <input
-          ref={refAñosDeVida}
-          type="number"
-          min="5"
-          max="20"
-          onChange={() => validate()}
-        />
-        <label>Temperamentos</label>
+    <div className="creacionRaza">
+      <div>
+        <h1>Create your dog</h1>
+        <form className="contenedor__form">
+          <div>
+            <label>Nombre de la raza</label>
+            <input
+              ref={refInputTexto}
+              type="text"
+              onChange={() => validate()}
+            />
+            {error.inputTexto && <p>raza ya existe en la base de datos</p>}
+          </div>
+          <div>
+            <label>Peso(Kg):</label>
+            <input
+              ref={refpesoMin}
+              type="number"
+              min="1"
+              max="80"
+              onChange={() => validate()}
+            />
+            <label>Min</label>
+            <input
+              ref={refpesoMax}
+              type="number"
+              min="2"
+              max="80"
+              onChange={() => validate()}
+            />
+            <label>Max</label>
+          </div>
+          <div>
+            <label>Altura(Cm):</label>
+            <input
+              ref={refAlturaMin}
+              type="number"
+              min="20"
+              max="85"
+              onChange={() => validate()}
+            />
+            <label>Min</label>
+            <input
+              ref={refAlturaMax}
+              type="number"
+              min="21"
+              max="85"
+              onChange={() => validate()}
+            />
+            <label>Max</label>
+          </div>
+          <div>
+            <label>Esperanza de vida promedio(Años)</label>
+            <input
+              ref={refAñosDeVida}
+              type="number"
+              min="5"
+              max="20"
+              onChange={() => validate()}
+            />
+          </div>
+          <div>
+            <label>Temperamentos</label>
 
-        <select ref={refTemperamentos} defaultValue={"DEFAULT"}>
-          <option value="DEFAULT" disabled>
-            Elige una opción
-          </option>
-          {datosTemperamentos?.map((x, i) => (
-            <option key={i} value={x}>
-              {x}
-            </option>
-          ))}
-        </select>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            validate();
-          }}
-        >
-          Add
-        </button>
-        <input ref={refSubmit} type="submit" onClick={(e) => submit(e)} />
-      </form>
-      {temperamentos?.map((x, i) => (
-        <div key={i}>
-          <p>{x}</p>
-          <button onClick={() => borrar(x)}>x</button>
-        </div>
-      ))}
-      {error.input && <p>Completar todos los campos correctamente</p>}
+            <select ref={refTemperamentos} defaultValue={"DEFAULT"}>
+              <option value="DEFAULT" disabled>
+                Elige una opción
+              </option>
+              {datosTemperamentos?.map((x, i) => (
+                <option key={i} value={x}>
+                  {x}
+                </option>
+              ))}
+            </select>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                validate();
+              }}
+            >
+              Add
+            </button>
+
+            {temperamentos?.map((x, i) => (
+              <div key={i}>
+                <p>{x}</p>
+                <button onClick={() => borrar(x)}>x</button>
+              </div>
+            ))}
+            {
+              <p className={!error.temp && "display_none"}>
+                debes elegir almenos un temperamento
+              </p>
+            }
+            {error.input && <p>Completar todos los campos correctamente</p>}
+          </div>
+          <input
+            ref={refSubmit}
+            value="Send"
+            type="submit"
+            onClick={(e) => {
+              submit(e);
+              !temperamentos.length
+                ? setError({
+                    ...error,
+                    temp: true,
+                  })
+                : setError({
+                    ...error,
+                    temp: false,
+                  });
+            }}
+          />
+        </form>
+      </div>
     </div>
   );
 }

@@ -16,15 +16,4 @@ module.exports = async function fulldb() {
       nombre: x,
     });
   });
-
-  // api.data.map(async (x) => {
-  //   if (x.temperament) {
-  //     array = x.temperament.split(",").map((x) => x.trim());
-  //     const tempx = await Temperamento.findAll({
-  //       where: {
-  //         nombre: array,
-  //       },
-  //     });
-  //   }
-  // });
 };

@@ -66,7 +66,6 @@ const dataCompleta = async function () {
     ],
     order: [["nombre"]],
   });
-
   raza = filtroRazasCompletas(raza);
   return (JsonPrincipal = [...array, ...raza]);
 };

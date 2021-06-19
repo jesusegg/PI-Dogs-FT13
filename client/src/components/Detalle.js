@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import img from "../img/perro.jpeg";
 import { useParams } from "react-router-dom";
 import { cleardetalle, getRazaDetail } from "../actions/index";
+import Error404 from "./Error404";
 
 function Detalle() {
   const dispatch = useDispatch();
@@ -16,13 +17,15 @@ function Detalle() {
   }, [dispatch, id]);
 
   const datos = useSelector((state) => state.detalleRaza);
+  console.log(datos);
   return (
     <div className="detalle">
-      {datos ? (
+      {datos === null && <Error404 />}
+      {typeof datos === "object" && datos?.nombre && (
         <div className="detalle__contenedor">
           <img
             className="detalle__imagen"
-            src={datos.imagen ? datos.imagen : img}
+            src={datos?.imagen ? datos.imagen : img}
             alt={datos?.nombre}
             width="546"
             height="400"
@@ -30,7 +33,7 @@ function Detalle() {
           <div>
             <div className="detalle__datos">
               <p className="detalle__datos__titulo">
-                {datos?.nombre.toUpperCase()}
+                {datos?.nombre?.toUpperCase()}
               </p>
               <p>Weight: {datos?.peso} Kg</p>
               <p>Height: {datos?.altura} Cm</p>
@@ -42,9 +45,8 @@ function Detalle() {
             </div>
           </div>
         </div>
-      ) : (
-        <h1>Cargando</h1>
       )}
+      {datos === undefined && <h1>cargando</h1>}
     </div>
   );
 }

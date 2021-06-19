@@ -3,11 +3,7 @@ const { Raza, Temperamento } = require("../db");
 const getDogs = require("./getDogs");
 const getTemperamentos = require("./getTemperamentos");
 const post = require("./posts");
-const {
-  arrayApi,
-  filtroRazasCompletas,
-  dataCompleta,
-} = require("../db_function/filtros");
+const { dataCompleta } = require("../db_function/filtros");
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');

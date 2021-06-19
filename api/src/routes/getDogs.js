@@ -126,5 +126,3 @@ server.get("/:idRaza", async (req, res) => {
 });
 
 module.exports = server;
-
-//arriba y abajo de a-z es el mismo

@@ -1,3 +1,4 @@
+const axios = require("axios");
 //trae todo del backend
 export function getDatosCompletos(pagina) {
   return function (dispatch) {
@@ -23,11 +24,27 @@ export function getRazasPaginado(page) {
 //estado de detalle de perro
 export function getRazaDetail(id) {
   return function (dispatch) {
-    return fetch("http://localhost:3001/dogs/" + id) //no
-      .then((response) => response.json())
-      .then((json) => {
-        dispatch({ type: "GET_RAZA_DETAIL", payload: json });
+    axios
+      .get("http://localhost:3001/dogs/" + id)
+      .then((response) => {
+        dispatch({ type: "GET_RAZA_DETAIL", payload: response.data });
+      })
+      .catch((error) => {
+        if (error.response?.status === 404) {
+          dispatch({ type: "GET_RAZA_DETAIL", payload: null });
+        }
       });
+    // return fetch("http://localhost:3001/dogs/" + id) //no
+    //   .then((response) => response.json())
+    //   .catch((error) => {
+    //     // if (error.response?.status === 404) {
+    //     dispatch({ type: "GET_RAZA_DETAIL", payload: "holaaaaaa" });
+    //     // }
+    //     console.log(error);
+    //   })
+    //   .then((json) => {
+    //     dispatch({ type: "GET_RAZA_DETAIL", payload: json });
+    //   });
   };
 }
 export function cleardetalle() {
@@ -83,6 +100,11 @@ export function getOrdenamientos(raza, page, listado, peso) {
       .then((response) => response.json())
       .then((json) => {
         dispatch({ type: "GET_ORDENAMIENTOS", payload: json });
+      })
+      .catch((error) => {
+        if (error.response?.status === 404) {
+          dispatch({ type: "GET_ORDENAMIENTOS", payload: null });
+        }
       });
   };
 }
