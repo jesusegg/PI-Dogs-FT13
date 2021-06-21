@@ -4,6 +4,7 @@ import img from "../img/perro.jpeg";
 import { useParams } from "react-router-dom";
 import { cleardetalle, getRazaDetail } from "../actions/index";
 import Error404 from "./Error404";
+import spin from "../img/1544764567.svg";
 
 function Detalle() {
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ function Detalle() {
   }, [dispatch, id]);
 
   const datos = useSelector((state) => state.detalleRaza);
-  console.log(datos);
+
   return (
     <div className="detalle">
       {datos === null && <Error404 />}
@@ -46,7 +47,11 @@ function Detalle() {
           </div>
         </div>
       )}
-      {datos === undefined && <h1>cargando</h1>}
+      {datos === undefined && (
+        <div className="loading">
+          <h1>Loading ....</h1> <img className="spin" src={spin} alt="1" />
+        </div>
+      )}
     </div>
   );
 }

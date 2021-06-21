@@ -1,6 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getTemperamentos, postRaza } from "../actions/index";
+import { BsTrash } from "react-icons/bs";
+import {
+  getDatosCompletos,
+  getTemperamentos,
+  postRaza,
+} from "../actions/index";
 
 function CreacionRaza() {
   const dispatch = useDispatch();
@@ -12,8 +17,10 @@ function CreacionRaza() {
   const refAñosDeVida = useRef(null);
   const refTemperamentos = useRef(null);
   const refSubmit = useRef(null);
+  console.log(refInputTexto.current?.value); //5465651316
 
   const [temperamentos, setTemperamentos] = useState([]);
+  const [formularioValido, setFormularioValido] = useState(false);
   const [error, setError] = useState({
     inputTexto: false,
     pesoGeneral: false,
@@ -25,9 +32,11 @@ function CreacionRaza() {
   const datosTemperamentos = useSelector((state) => state.temperamentos);
   let datos = useSelector((state) => state.datosCompletos);
   let datosNuevo = datos?.map((x) => x.nombre);
+  //console.log(temperamentos); //545465464666
 
-  if (error.temp) {
+  if (error.temp || formularioValido) {
     setTimeout(() => {
+      setFormularioValido(false);
       setError({
         ...error,
         temp: false,
@@ -95,7 +104,7 @@ function CreacionRaza() {
       if (temperamentos.length > 4) {
         return;
       } else {
-        if (!temperamentos.includes(refTemperamentos.current.value)) {
+        if (!temperamentos.includes(` ${refTemperamentos.current?.value}`)) {
           setTemperamentos([
             ...temperamentos,
             ` ${refTemperamentos.current.value}`,
@@ -106,7 +115,7 @@ function CreacionRaza() {
     }
   }
   let datosImagen = datos?.map((x) => x.imagen);
-  const random = Math.random() * 260;
+  const random = Math.random() * 180;
   datosImagen = datosImagen?.slice(random, random + 1);
 
   function borrar(valor) {
@@ -115,40 +124,60 @@ function CreacionRaza() {
   function submit(e) {
     e.preventDefault();
 
-    if (error.pesoGeneral || error.temperamentos || error.alturaGeneral) {
+    if (
+      error.input ||
+      error.pesoGeneral ||
+      error.temperamentos ||
+      error.alturaGeneral ||
+      error.temp
+    ) {
+      setTemperamentos([]);
+      setFormularioValido(!formularioValido);
       setError({
         ...error,
         input: true,
       });
+
       return;
     } else {
-      setError({
-        ...error,
-        input: false,
-      });
-      dispatch(
-        postRaza({
-          nombre: refInputTexto.current.value,
-          peso: `${refpesoMin.current.value} - ${refpesoMax.current.value}`,
-          altura: `${refAlturaMin.current.value} - ${refAlturaMax.current.value}`,
-          años_de_vida: `${refAñosDeVida.current.value} years`,
-          imagen: datosImagen && datosImagen[0],
-          temperamentos: temperamentos,
-        })
-      );
-      [
-        refpesoMax.current.value,
-        refpesoMin.current.value,
-        refAlturaMin.current.value,
-        refAlturaMax.current.value,
-        refAñosDeVida.current.value,
-      ] = "";
-      refInputTexto.current.value = "";
-      setTemperamentos([]);
+      //setFormularioValido(!formularioValido);
+      if (
+        refInputTexto.current.value &&
+        refpesoMin.current.value &&
+        refpesoMax.current.value &&
+        refAlturaMin.current.value &&
+        refAlturaMax.current.value
+      ) {
+        alert("Dog breed created correctly");
+        setError({
+          ...error,
+          input: false,
+        });
+        dispatch(
+          postRaza({
+            nombre: refInputTexto.current.value,
+            peso: `${refpesoMin.current.value} - ${refpesoMax.current.value}`,
+            altura: `${refAlturaMin.current.value} - ${refAlturaMax.current.value}`,
+            años_de_vida: `${refAñosDeVida.current.value} years`,
+            imagen: datosImagen && datosImagen[0],
+            temperamentos: temperamentos,
+          })
+        );
+        [
+          refpesoMax.current.value,
+          refpesoMin.current.value,
+          refAlturaMin.current.value,
+          refAlturaMax.current.value,
+          refAñosDeVida.current.value,
+        ] = "";
+        refInputTexto.current.value = "";
+        setTemperamentos([]);
+      }
     }
   }
 
   useEffect(() => {
+    dispatch(getDatosCompletos());
     dispatch(getTemperamentos());
     // return () => {
     //     cleanup
@@ -157,39 +186,48 @@ function CreacionRaza() {
   return (
     <div className="creacionRaza">
       <div>
-        <h1>Create your dog</h1>
+        <h1 style={{ color: "black" }}>Create your dog</h1>
         <form className="contenedor__form">
-          <div>
-            <label>Nombre de la raza</label>
+          <div className="contenedor__1">
+            <label>Name or breed: </label>
             <input
               ref={refInputTexto}
               type="text"
               onChange={() => validate()}
             />
-            {error.inputTexto && <p>raza ya existe en la base de datos</p>}
+            {error.inputTexto && (
+              <p className="error_input_creacion">
+                *This dog already exists. Try again!
+              </p>
+            )}
           </div>
-          <div>
-            <label>Peso(Kg):</label>
+          <div className="contenedor__2">
+            <label>Weight (Kg):</label>
             <input
+              className={error.pesoGeneral ? "error_input" : "nada"}
               ref={refpesoMin}
               type="number"
               min="1"
               max="80"
-              onChange={() => validate()}
+              onClick={() => validate()}
+              // onChange={() => validate()}
             />
             <label>Min</label>
             <input
+              className={error.pesoGeneral ? "error_input" : "nada"}
               ref={refpesoMax}
               type="number"
               min="2"
               max="80"
-              onChange={() => validate()}
+              onClick={() => validate()}
+              //onChange={() => validate()}
             />
             <label>Max</label>
           </div>
-          <div>
-            <label>Altura(Cm):</label>
+          <div className="contenedor__3">
+            <label>Height (Cm):</label>
             <input
+              className={error.alturaGeneral ? "error_input" : "nada"}
               ref={refAlturaMin}
               type="number"
               min="20"
@@ -198,6 +236,7 @@ function CreacionRaza() {
             />
             <label>Min</label>
             <input
+              className={error.alturaGeneral ? "error_input" : "nada"}
               ref={refAlturaMax}
               type="number"
               min="21"
@@ -206,8 +245,8 @@ function CreacionRaza() {
             />
             <label>Max</label>
           </div>
-          <div>
-            <label>Esperanza de vida promedio(Años)</label>
+          <div className="contenedor__4">
+            <label>Average life span (years):</label>
             <input
               ref={refAñosDeVida}
               type="number"
@@ -216,12 +255,12 @@ function CreacionRaza() {
               onChange={() => validate()}
             />
           </div>
-          <div>
-            <label>Temperamentos</label>
+          <div className="contenedor__5">
+            <label>Temperaments:</label>
 
             <select ref={refTemperamentos} defaultValue={"DEFAULT"}>
               <option value="DEFAULT" disabled>
-                Elige una opción
+                Choose an option
               </option>
               {datosTemperamentos?.map((x, i) => (
                 <option key={i} value={x}>
@@ -230,6 +269,7 @@ function CreacionRaza() {
               ))}
             </select>
             <button
+              className="boton boton__add"
               onClick={(e) => {
                 e.preventDefault();
                 validate();
@@ -237,23 +277,35 @@ function CreacionRaza() {
             >
               Add
             </button>
-
+            <p className="error_input_creacion texto__temperamentos">
+              *Add up to 5 temperaments
+            </p>
             {temperamentos?.map((x, i) => (
-              <div key={i}>
+              <div className="array_temperamentos" key={i}>
                 <p>{x}</p>
-                <button onClick={() => borrar(x)}>x</button>
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    borrar(x);
+                  }}
+                >
+                  <BsTrash />
+                </button>
               </div>
             ))}
             {
-              <p className={!error.temp && "display_none"}>
-                debes elegir almenos un temperamento
+              <p className={!error.temp ? "display_none" : "nada"}>
+                You must choose at least one temperament
               </p>
             }
-            {error.input && <p>Completar todos los campos correctamente</p>}
+            {formularioValido && (
+              <p>Please check again. You must fill the form correctly </p>
+            )}
           </div>
           <input
+            className="contenedor__submit boton"
             ref={refSubmit}
-            value="Send"
+            value="Create my dog"
             type="submit"
             onClick={(e) => {
               submit(e);

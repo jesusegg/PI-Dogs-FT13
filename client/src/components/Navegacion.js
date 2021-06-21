@@ -16,9 +16,6 @@ function Navegacion() {
         <Link to="/Dogs/Create">
           <p>Create your Dog</p>
         </Link>
-        <Link to="/Dogs/SingIn">
-          <p>Sign In</p>
-        </Link>
       </div>
     </div>
   );

@@ -24,6 +24,7 @@ function Home() {
     busquedaTemperamentos: false,
   });
   const [paginado, setPaginado] = useState(1);
+  const [ultimo, setUltimo] = useState(false);
   const refInput = useRef(null);
   const refRazaSelect = useRef(null);
   const refRazaTemperamentos = useRef(null);
@@ -51,10 +52,14 @@ function Home() {
     if (paginado < data.pageCount) {
       setPaginado(paginado + 1);
     }
+    if (paginado === data.pageCount - 1) {
+      setUltimo(true);
+    }
   }
   function paginaAnterior() {
     if (paginado > 1) {
       setPaginado(paginado - 1);
+      setUltimo(false);
     }
   }
   const resultadoRazaLista = findRazaLista(
@@ -155,8 +160,8 @@ function Home() {
             <option value="DEFAULT" disabled>
               Choose one option
             </option>
-            <option value="Existentes">Existentes</option>
-            <option value="Creadas por mi">Creadas por mi</option>
+            <option value="Existentes">Breeds by Api</option>
+            <option value="Creadas por mi">Created by me</option>
           </select>
 
           <button
@@ -231,8 +236,8 @@ function Home() {
             </option>
             <option value="Name A-Z">Name A-Z</option>
             <option value="Name Z-A">Name Z-A</option>
-            <option value="Peso Mayor">Peso Mayor</option>
-            <option value="Peso Menor">Peso Menor</option>
+            <option value="Peso Mayor">Weight &#8657;</option>
+            <option value="Peso Menor">Weight &#8659;</option>
           </select>
           <button
             className="boton boton-home"
@@ -266,18 +271,20 @@ function Home() {
             Previous
           </button>
         )}
-        <button
-          className="boton boton--paginado"
-          onClick={() =>
-            paginaSiguiente(
-              (razas.busqueda && datosPaginado) ||
-                (razas.busquedaTemperamentos && datosTemperamentoslista) ||
-                (razas.ordenamientos && datosOrdamientos)
-            )
-          }
-        >
-          Next
-        </button>
+        {!ultimo && (
+          <button
+            className="boton boton--paginado"
+            onClick={() =>
+              paginaSiguiente(
+                (razas.busqueda && datosPaginado) ||
+                  (razas.busquedaTemperamentos && datosTemperamentoslista) ||
+                  (razas.ordenamientos && datosOrdamientos)
+              )
+            }
+          >
+            Next
+          </button>
+        )}
       </div>
     </div>
   );

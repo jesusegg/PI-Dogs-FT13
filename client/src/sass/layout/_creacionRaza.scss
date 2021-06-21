@@ -7,13 +7,14 @@
   background-position-x: left;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  color: white;
   h1 {
     margin-right: 2rem;
     padding-top: 5rem;
   }
 
   .contenedor__form {
-    background-color: aquamarine;
+    background-color: $colorNavegacion;
     width: 80%;
     height: 80%;
     margin-left: 4rem;
@@ -21,10 +22,101 @@
     display: flex;
     flex-direction: column;
     gap: 4rem;
+    border-radius: 2rem;
+    .contenedor__1 {
+      margin-top: 2rem;
+      height: 5%;
+    }
+    .contenedor__5 {
+      height: 29%;
+      gap: 1rem;
+      margin-bottom: 4rem;
+      //display: flex;
+      label {
+        margin-right: 1rem;
+      }
+      select {
+        margin-right: 1rem;
+      }
+      .texto__temperamentos {
+        color: white;
+        margin: 1rem;
+      }
+    }
+    .contenedor__2 {
+      label {
+        margin-right: 1rem;
+      }
+      select {
+        margin-right: 1rem;
+      }
+    }
+    .contenedor__3 {
+      label {
+        margin-right: 1rem;
+      }
+      select {
+        margin-right: 1rem;
+      }
+    }
+    .contenedor__4 {
+      label {
+        margin-right: 1rem;
+      }
+      select {
+        margin-right: 1rem;
+      }
+    }
   }
 }
 
 .display_none {
   display: none;
   color: aqua;
+}
+.error_input {
+  border-color: red;
+  border-width: 0.2rem;
+  // background-color: blueviolet;
+}
+.error_input_creacion {
+  color: yellow;
+  margin: 0;
+  font-size: 1.4rem;
+  text-align: center;
+  margin-left: 4rem;
+  text-decoration: underline;
+}
+.array_temperamentos {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  font-weight: 400;
+  align-items: center;
+  width: 60%;
+  margin: 0.5rem auto;
+  justify-items: center;
+
+  button {
+    //  justify-items: left;
+    color: white;
+    height: 3rem;
+    background-color: transparent;
+    border-style: none;
+    cursor: pointer;
+    padding-top: 0.5rem;
+    text-align: start;
+  }
+  p {
+    //justify-items: right;
+    font-size: 1.6rem;
+    text-align: start;
+    margin: 0;
+  }
+}
+.contenedor__submit {
+  width: 20rem;
+  margin: 0 auto;
+}
+.boton__add {
+  padding: 0.2rem 1rem;
 }
