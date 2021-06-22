@@ -123,35 +123,3 @@ export function postRaza(data) {
       });
   };
 }
-//http://localhost:3001/dogs/?page=1&raza=bull&listado=Des&peso=Asc
-
-// const nextPage = () => {
-//   if (videogames.length < currentPage + 15) {
-//       setCurrentPage(currentPage)
-//   } else {
-//       setCurrentPage(currentPage + 15)
-//   }
-// }
-
-// const prevPage = () => {
-//   if (currentPage < 14) {
-//       setCurrentPage(0)
-//   } else {
-//       setCurrentPage(currentPage - 15)
-//   }
-// }
-
-// const filteredGames = () => {
-//   return videogames.slice(currentPage, currentPage + 15)
-// }
-// {videogames ? filteredGames().map((e) => {
-//           return (
-//                   <NavLink to={`/videogames/${e.id}`} key={e.id}>
-//                       <Card
-//                           name={e.name}
-//                           image={e.image}
-//                           genre={e.genre}
-//                           key={e.id} />
-//                   </NavLink>
-//                   )
-//               })

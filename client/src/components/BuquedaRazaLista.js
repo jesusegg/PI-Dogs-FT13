@@ -37,7 +37,7 @@ function BuquedaRazaLista({ data }) {
       </div>
       {!data?.length && (
         <div className="loading">
-          <h1>you haven't created a breed yet</h1>
+          <h1>You haven't created a breed yet</h1>
         </div>
       )}
     </div>

@@ -88,7 +88,6 @@ function Home() {
         }`
       )
     );
-
     razas.busqueda && dispatch(getDatosCompletos(`${paginado}`));
 
     dispatch(
@@ -131,7 +130,6 @@ function Home() {
             placeholder="Search dogs by name"
             onChange={(e) => (refInput.current.value = e.target.value)}
           />
-
           <button
             className="boton-lupa"
             name="ordenamientos"

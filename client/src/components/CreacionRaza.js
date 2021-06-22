@@ -2,6 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BsTrash } from "react-icons/bs";
 import {
+  validateInputAltura,
+  validateInputPeso,
+  validateInputText,
+  validateInputTemperamentos,
+} from "../ordenamientos/validaciones";
+import {
   getDatosCompletos,
   getTemperamentos,
   postRaza,
@@ -17,7 +23,7 @@ function CreacionRaza() {
   const refAñosDeVida = useRef(null);
   const refTemperamentos = useRef(null);
   const refSubmit = useRef(null);
-  console.log(refInputTexto.current?.value); //5465651316
+  //console.log(refInputTexto.current?.value); //5465651316
 
   const [temperamentos, setTemperamentos] = useState([]);
   const [formularioValido, setFormularioValido] = useState(false);
@@ -44,76 +50,77 @@ function CreacionRaza() {
     }, 2000);
   }
 
-  function validate() {
-    if (refInputTexto.current.value) {
-      const busqueda = datosNuevo?.find(
-        (x) => x === refInputTexto.current.value
-      );
-      if (busqueda) {
-        setError({
-          ...error,
-          inputTexto: true,
-        });
-      } else {
-        setError({
-          ...error,
-          inputTexto: false,
-        });
-      }
-    }
-    if (refpesoMin.current.value && refpesoMax.current.value) {
-      if (refpesoMin.current.value > refpesoMax.current.value) {
-        setError({
-          ...error,
-          pesoGeneral: true,
-        });
-      } else {
-        setError({
-          ...error,
-          pesoGeneral: false,
-        });
-      }
-    }
-    if (refAlturaMin.current.value) {
-      if (refAlturaMin.current.value < 20 || refAlturaMin.current.value > 85) {
-        setError({
-          ...error,
-          alturaMin: true,
-        });
-      } else {
-        setError({
-          ...error,
-          alturaMin: false,
-        });
-      }
-    }
-    if (refAlturaMin.current.value && refAlturaMax.current.value) {
-      if (refAlturaMin.current.value > refAlturaMax.current.value) {
-        setError({
-          ...error,
-          alturaGeneral: true,
-        });
-      } else {
-        setError({
-          ...error,
-          alturaGeneral: false,
-        });
-      }
-    }
-    if (refTemperamentos.current.value !== "DEFAULT") {
-      if (temperamentos.length > 4) {
-        return;
-      } else {
-        if (!temperamentos.includes(` ${refTemperamentos.current?.value}`)) {
-          setTemperamentos([
-            ...temperamentos,
-            ` ${refTemperamentos.current.value}`,
-          ]);
-          refTemperamentos.current.value = "DEFAULT";
-        }
-      }
-    }
-  }
+  // function validate() {
+  //   if (refInputTexto.current.value) {
+  //     const busqueda = datosNuevo?.find(
+  //       (x) => x === refInputTexto.current.value
+  //     );
+  //     if (busqueda) {
+  //       setError({
+  //         ...error,
+  //         inputTexto: true,
+  //       });
+  //     } else {
+  //       setError({
+  //         ...error,
+  //         inputTexto: false,
+  //       });
+  //     }
+  //   }
+  //   if (refpesoMin.current.value && refpesoMax.current.value) {
+  //     if (refpesoMin.current.value > refpesoMax.current.value) {
+  //       setError({
+  //         ...error,
+  //         pesoGeneral: true,
+  //       });
+  //     } else {
+  //       setError({
+  //         ...error,
+  //         pesoGeneral: false,
+  //       });
+  //     }
+  //   }
+  //   if (refAlturaMin.current.value) {
+  //     if (refAlturaMin.current.value < 20 || refAlturaMin.current.value > 85) {
+  //       setError({
+  //         ...error,
+  //         alturaMin: true,
+  //       });
+  //     } else {
+  //       setError({
+  //         ...error,
+  //         alturaMin: false,
+  //       });
+  //     }
+  //   }
+  //   if (refAlturaMin.current.value && refAlturaMax.current.value) {
+  //     if (refAlturaMin.current.value > refAlturaMax.current.value) {
+  //       setError({
+  //         ...error,
+  //         alturaGeneral: true,
+  //       });
+  //     } else {
+  //       setError({
+  //         ...error,
+  //         alturaGeneral: false,
+  //       });
+  //     }
+  //   }
+  //   if (refTemperamentos.current.value !== "DEFAULT") {
+  //     if (temperamentos.length > 4) {
+  //       return;
+  //     } else {
+  //       if (!temperamentos.includes(` ${refTemperamentos.current?.value}`)) {
+  //         setTemperamentos([
+  //           ...temperamentos,
+  //           ` ${refTemperamentos.current.value}`,
+  //         ]);
+  //         refTemperamentos.current.value = "DEFAULT";
+  //       }
+  //     }
+  //   }
+  // }
+
   let datosImagen = datos?.map((x) => x.imagen);
   const random = Math.random() * 180;
   datosImagen = datosImagen?.slice(random, random + 1);
@@ -121,11 +128,13 @@ function CreacionRaza() {
   function borrar(valor) {
     setTemperamentos(temperamentos.filter((x) => x !== valor));
   }
-  function submit(e) {
-    e.preventDefault();
+  function submit() {
+    //e.preventDefault();
 
     if (
-      error.input ||
+      // !!temperamentos.length ||
+      error.inputTexto ||
+      temperamentos.length <= 0 ||
       error.pesoGeneral ||
       error.temperamentos ||
       error.alturaGeneral ||
@@ -140,8 +149,8 @@ function CreacionRaza() {
 
       return;
     } else {
-      //setFormularioValido(!formularioValido);
       if (
+        //formularioValido &&
         refInputTexto.current.value &&
         refpesoMin.current.value &&
         refpesoMax.current.value &&
@@ -193,7 +202,9 @@ function CreacionRaza() {
             <input
               ref={refInputTexto}
               type="text"
-              onChange={() => validate()}
+              onChange={() =>
+                validateInputText(refInputTexto, datosNuevo, setError, error)
+              }
             />
             {error.inputTexto && (
               <p className="error_input_creacion">
@@ -209,8 +220,9 @@ function CreacionRaza() {
               type="number"
               min="1"
               max="80"
-              onClick={() => validate()}
-              // onChange={() => validate()}
+              onChange={() =>
+                validateInputPeso(refpesoMin, refpesoMax, setError, error)
+              }
             />
             <label>Min</label>
             <input
@@ -219,7 +231,9 @@ function CreacionRaza() {
               type="number"
               min="2"
               max="80"
-              onClick={() => validate()}
+              onChange={() =>
+                validateInputPeso(refpesoMin, refpesoMax, setError, error)
+              }
               //onChange={() => validate()}
             />
             <label>Max</label>
@@ -232,7 +246,9 @@ function CreacionRaza() {
               type="number"
               min="20"
               max="85"
-              onChange={() => validate()}
+              onChange={() =>
+                validateInputAltura(refAlturaMin, refAlturaMax, setError, error)
+              }
             />
             <label>Min</label>
             <input
@@ -241,7 +257,9 @@ function CreacionRaza() {
               type="number"
               min="21"
               max="85"
-              onChange={() => validate()}
+              onChange={() =>
+                validateInputAltura(refAlturaMin, refAlturaMax, setError, error)
+              }
             />
             <label>Max</label>
           </div>
@@ -252,7 +270,13 @@ function CreacionRaza() {
               type="number"
               min="5"
               max="20"
-              onChange={() => validate()}
+              onChange={() =>
+                validateInputTemperamentos(
+                  refTemperamentos,
+                  temperamentos,
+                  setTemperamentos
+                )
+              }
             />
           </div>
           <div className="contenedor__5">
@@ -272,7 +296,12 @@ function CreacionRaza() {
               className="boton boton__add"
               onClick={(e) => {
                 e.preventDefault();
-                validate();
+
+                validateInputTemperamentos(
+                  refTemperamentos,
+                  temperamentos,
+                  setTemperamentos
+                );
               }}
             >
               Add
@@ -308,16 +337,21 @@ function CreacionRaza() {
             value="Create my dog"
             type="submit"
             onClick={(e) => {
-              submit(e);
-              !temperamentos.length
+              e.preventDefault();
+              // validateInputText(refInputTexto, datosNuevo, setError, error); //////////////////////////////////
+              // validateInputAltura(refAlturaMin, refAlturaMax, setError, error);
+              // validateInputPeso(refpesoMin, refpesoMax, setError, error);
+
+              temperamentos.length > 0
                 ? setError({
                     ...error,
-                    temp: true,
+                    temp: false,
                   })
                 : setError({
                     ...error,
-                    temp: false,
+                    temp: true,
                   });
+              submit();
             }}
           />
         </form>

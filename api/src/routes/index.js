@@ -17,9 +17,13 @@ router.use("/dog", post);
 // Ejemplo: router.use('/auth', authRouter);
 
 router.get("/", async (req, res) => {
-  const JsonPrincipal = await dataCompleta();
+  try {
+    const JsonPrincipal = await dataCompleta();
 
-  res.json(JsonPrincipal);
+    res.json(JsonPrincipal);
+  } catch (error) {
+    res.status(404).json("error en la base de datos");
+  }
 });
 
 module.exports = router;

@@ -1,6 +1,5 @@
 const { Router } = require("express");
 const { Raza, Temperamento } = require("../db");
-//const { v4: uuidv4 } = require("uuid");
 
 const server = Router();
 
@@ -8,30 +7,34 @@ server.post("/", async (req, res) => {
   const { nombre, altura, peso, años_de_vida, imagen, temperamentos } =
     req.body;
 
-  const razaNueva = await Raza.create({
-    nombre: nombre.toLowerCase(),
-    peso: peso,
-    altura: altura,
-    años_de_vida: años_de_vida,
-    imagen: imagen,
-  });
-
-  temperamentos.map(async (x) => {
-    await Temperamento.findOrCreate({
-      where: { nombre: x },
-      defaults: { nombre: x },
+  try {
+    const razaNueva = await Raza.create({
+      nombre: nombre.toLowerCase(),
+      peso: peso,
+      altura: altura,
+      años_de_vida: años_de_vida,
+      imagen: imagen,
     });
-  });
 
-  const temperamentoRaza = await Temperamento.findAll({
-    where: {
-      nombre: temperamentos,
-    },
-  });
+    temperamentos.map(async (x) => {
+      await Temperamento.findOrCreate({
+        where: { nombre: x },
+        defaults: { nombre: x },
+      });
+    });
 
-  razaNueva.setTemperamentos(temperamentoRaza);
+    const temperamentoRaza = await Temperamento.findAll({
+      where: {
+        nombre: temperamentos,
+      },
+    });
 
-  res.json(razaNueva);
+    razaNueva.setTemperamentos(temperamentoRaza);
+
+    res.json(razaNueva);
+  } catch (error) {
+    return res.status(404).json("error al crear la raza");
+  }
 });
 
 module.exports = server;
