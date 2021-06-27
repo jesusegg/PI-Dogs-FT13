@@ -3,8 +3,6 @@ const initialState = {};
 
 const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
-    // Aca va tu codigo;
-
     case "GET_DATOS_COMPLETOS":
       return {
         ...state,
@@ -45,14 +43,6 @@ const reducer = (state = initialState, { type, payload }) => {
         ...state,
         razasCreadas: payload,
       };
-    //peso asc, peso desc, lista desc, busqueda temp
-    // case "REMOVE_MOVIE_FAVORITE":
-    //   return {
-    //     ...state,
-    //     moviesFavourites: state.moviesFavourites.filter(
-    //       (movie) => movie.id !== payload.id
-    //     ),
-    //   };
 
     default:
       return state;

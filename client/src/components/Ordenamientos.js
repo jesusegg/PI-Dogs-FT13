@@ -17,12 +17,12 @@ function Ordenamientos({ datos }) {
           datos.posts?.map((x) => (
             <div className="ordenamientos__tarjeta" key={x.id}>
               <Link
-                to={`/Dogs/detalle/${x.id}`}
+                to={`/Dogs/detail/${x.id}`}
                 onClick={() => dispatch(getRazaDetail(x.id))}
               >
                 <img
                   src={x.imagen ? x.imagen : img}
-                  alt="hol"
+                  alt="imagen"
                   width="360px"
                   height="250px"
                 />

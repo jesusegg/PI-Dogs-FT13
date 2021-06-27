@@ -67,7 +67,8 @@ const dataCompleta = async function () {
     order: [["nombre"]],
   });
   raza = filtroRazasCompletas(raza);
-  return (JsonPrincipal = [...array, ...raza]);
+  const JsonPrincipal = [...array, ...raza];
+  return JsonPrincipal;
 };
 const paginado = function (req, res, data) {
   const pageCount = Math.ceil(data.length / 8);

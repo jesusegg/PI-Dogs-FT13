@@ -79,7 +79,7 @@ describe("App", () => {
     it("El componente Detalle debe renderizar en la ruta /Dogs/detalle/:id", () => {
       const container = mount(
         <Provider store={store}>
-          <MemoryRouter initialEntries={["/Dogs/detalle/:1"]}>
+          <MemoryRouter initialEntries={["/Dogs/detail/:1"]}>
             <App />
           </MemoryRouter>
         </Provider>

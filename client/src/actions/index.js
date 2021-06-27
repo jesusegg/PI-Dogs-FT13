@@ -45,8 +45,6 @@ export function cleardetalle() {
 
 //estado de temperamentos lista
 export function getTemperamentosLista(busqueda, page, sort, peso) {
-  //no
-  //nuevo ordenamiento
   return function (dispatch) {
     return fetch(
       `http://localhost:3001/temperament/?busqueda=${busqueda}&page=${page}&peso=${peso}&listado=${sort}`
@@ -67,7 +65,6 @@ export function clearTemperamentos() {
 
 //estado de temperamentos
 export function getTemperamentos() {
-  //no
   return function (dispatch) {
     return fetch("http://localhost:3001/temperament")
       .then((response) => response.json())
@@ -79,22 +76,19 @@ export function getTemperamentos() {
 
 export function getOrdenamientos(raza, page, listado, peso) {
   return function (dispatch) {
-    return (
-      axios(
-        `http://localhost:3001/dogs/?page=${page}&${
-          raza !== undefined ? `raza=${raza}` : "nada"
-        }&listado=${listado}&peso=${peso}`
-      )
-        // .then((response) => response.json())
-        .then((json) => {
-          dispatch({ type: "GET_ORDENAMIENTOS", payload: json.data });
-        })
-        .catch((error) => {
-          if (error.response?.status === 404) {
-            dispatch({ type: "GET_ORDENAMIENTOS", payload: null });
-          }
-        })
-    );
+    return axios(
+      `http://localhost:3001/dogs/?page=${page}&${
+        raza !== undefined ? `raza=${raza}` : "nada"
+      }&listado=${listado}&peso=${peso}`
+    )
+      .then((json) => {
+        dispatch({ type: "GET_ORDENAMIENTOS", payload: json.data });
+      })
+      .catch((error) => {
+        if (error.response?.status === 404) {
+          dispatch({ type: "GET_ORDENAMIENTOS", payload: null });
+        }
+      });
   };
 }
 
@@ -107,11 +101,10 @@ export function clearOrdenamientos() {
 
 //estado de crear perro
 export function postRaza(data) {
-  //no
   return function (dispatch) {
     return fetch("http://localhost:3001/dog", {
-      method: "POST", // or 'PUT'
-      body: JSON.stringify(data), // data can be `string` or {object}!
+      method: "POST",
+      body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
       },
@@ -121,5 +114,17 @@ export function postRaza(data) {
       .then((json) => {
         dispatch({ type: "POST_RAZA", payload: json });
       });
+  };
+}
+
+export function deleteRaza(data) {
+  return function (dispatch) {
+    return fetch("http://localhost:3001/dog", {
+      method: "DELETE",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => res.json());
   };
 }

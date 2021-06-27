@@ -57,7 +57,6 @@ server.get("/", async (req, res) => {
       if (req.query.peso) {
         ordenPeso(req, filterByRaza);
       }
-
       if (!filterByRaza.length) {
         return res.status(404).json("raza de perro no encontrada");
       } else {
@@ -69,7 +68,7 @@ server.get("/", async (req, res) => {
         ordenDescendente(JsonPrincipal);
       }
       ordenPeso(req, JsonPrincipal);
-      return paginado(req, res, JsonPrincipal); //dentro del if para retornar req.query.peso
+      return paginado(req, res, JsonPrincipal);
     }
 
     if (req.query.listado === "Des") {
@@ -85,7 +84,6 @@ server.get("/", async (req, res) => {
 server.get("/:idRaza", async (req, res) => {
   try {
     const array = await dataCompleta();
-    //const array = await arrayApi();
 
     const busquedaId = array.find((x) => x.id.toString() === req.params.idRaza);
 

@@ -1,11 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { getRazaDetail } from "../actions/index";
+import { getRazaDetail, deleteRaza, getDatosCompletos } from "../actions/index";
 import img from "../img/perro.jpeg";
+import { BsTrash } from "react-icons/bs";
 
 function BuquedaRazaLista({ data }) {
   const dispatch = useDispatch();
+
+  const eliminarRaza = function (id, nombre) {
+    dispatch(deleteRaza({ id, nombre }));
+
+    data = data.filter((x) => x.id !== id);
+  };
+  React.useEffect(() => {
+    dispatch(getDatosCompletos());
+  }, [data, dispatch]);
+
   return (
     <div>
       <div className="ordenamientos">
@@ -13,12 +24,12 @@ function BuquedaRazaLista({ data }) {
           ? data?.map((x) => (
               <div className="ordenamientos__tarjeta" key={x.id}>
                 <Link
-                  to={`/Dogs/detalle/${x.id}`}
+                  to={`/Dogs/detail/${x.id}`}
                   onClick={() => dispatch(getRazaDetail(x.id))}
                 >
                   <img
                     src={x.imagen ? x.imagen : img}
-                    alt="hol"
+                    alt="imagen"
                     width="360px"
                     height="250px"
                   />
@@ -30,7 +41,16 @@ function BuquedaRazaLista({ data }) {
                 >
                   <p>{x.nombre.toUpperCase()}</p>
                 </Link>
+
                 <p>{x.temperamentos}</p>
+                {x.id.length > 4 && (
+                  <button
+                    className="boton__borrado"
+                    onClick={() => eliminarRaza(x.id, x.nombre, data)}
+                  >
+                    <BsTrash />
+                  </button>
+                )}
               </div>
             ))
           : false}

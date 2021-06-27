@@ -23,7 +23,6 @@ function CreacionRaza() {
   const refAñosDeVida = useRef(null);
   const refTemperamentos = useRef(null);
   const refSubmit = useRef(null);
-  //console.log(refInputTexto.current?.value); //5465651316
 
   const [temperamentos, setTemperamentos] = useState([]);
   const [formularioValido, setFormularioValido] = useState(false);
@@ -38,7 +37,6 @@ function CreacionRaza() {
   const datosTemperamentos = useSelector((state) => state.temperamentos);
   let datos = useSelector((state) => state.datosCompletos);
   let datosNuevo = datos?.map((x) => x.nombre);
-  //console.log(temperamentos); //545465464666
 
   if (error.temp || formularioValido) {
     setTimeout(() => {
@@ -50,77 +48,6 @@ function CreacionRaza() {
     }, 2000);
   }
 
-  // function validate() {
-  //   if (refInputTexto.current.value) {
-  //     const busqueda = datosNuevo?.find(
-  //       (x) => x === refInputTexto.current.value
-  //     );
-  //     if (busqueda) {
-  //       setError({
-  //         ...error,
-  //         inputTexto: true,
-  //       });
-  //     } else {
-  //       setError({
-  //         ...error,
-  //         inputTexto: false,
-  //       });
-  //     }
-  //   }
-  //   if (refpesoMin.current.value && refpesoMax.current.value) {
-  //     if (refpesoMin.current.value > refpesoMax.current.value) {
-  //       setError({
-  //         ...error,
-  //         pesoGeneral: true,
-  //       });
-  //     } else {
-  //       setError({
-  //         ...error,
-  //         pesoGeneral: false,
-  //       });
-  //     }
-  //   }
-  //   if (refAlturaMin.current.value) {
-  //     if (refAlturaMin.current.value < 20 || refAlturaMin.current.value > 85) {
-  //       setError({
-  //         ...error,
-  //         alturaMin: true,
-  //       });
-  //     } else {
-  //       setError({
-  //         ...error,
-  //         alturaMin: false,
-  //       });
-  //     }
-  //   }
-  //   if (refAlturaMin.current.value && refAlturaMax.current.value) {
-  //     if (refAlturaMin.current.value > refAlturaMax.current.value) {
-  //       setError({
-  //         ...error,
-  //         alturaGeneral: true,
-  //       });
-  //     } else {
-  //       setError({
-  //         ...error,
-  //         alturaGeneral: false,
-  //       });
-  //     }
-  //   }
-  //   if (refTemperamentos.current.value !== "DEFAULT") {
-  //     if (temperamentos.length > 4) {
-  //       return;
-  //     } else {
-  //       if (!temperamentos.includes(` ${refTemperamentos.current?.value}`)) {
-  //         setTemperamentos([
-  //           ...temperamentos,
-  //           ` ${refTemperamentos.current.value}`,
-  //         ]);
-  //         refTemperamentos.current.value = "DEFAULT";
-  //       }
-  //     }
-  //   }
-  // }
-
   let datosImagen = datos?.map((x) => x.imagen);
   const random = Math.random() * 180;
   datosImagen = datosImagen?.slice(random, random + 1);
@@ -129,10 +56,7 @@ function CreacionRaza() {
     setTemperamentos(temperamentos.filter((x) => x !== valor));
   }
   function submit() {
-    //e.preventDefault();
-
     if (
-      // !!temperamentos.length ||
       error.inputTexto ||
       temperamentos.length <= 0 ||
       error.pesoGeneral ||
@@ -150,7 +74,6 @@ function CreacionRaza() {
       return;
     } else {
       if (
-        //formularioValido &&
         refInputTexto.current.value &&
         refpesoMin.current.value &&
         refpesoMax.current.value &&
@@ -188,10 +111,8 @@ function CreacionRaza() {
   useEffect(() => {
     dispatch(getDatosCompletos());
     dispatch(getTemperamentos());
-    // return () => {
-    //     cleanup
-    // }
   }, [dispatch]);
+
   return (
     <div className="creacionRaza">
       <div>
@@ -234,7 +155,6 @@ function CreacionRaza() {
               onChange={() =>
                 validateInputPeso(refpesoMin, refpesoMax, setError, error)
               }
-              //onChange={() => validate()}
             />
             <label>Max</label>
           </div>
@@ -338,10 +258,6 @@ function CreacionRaza() {
             type="submit"
             onClick={(e) => {
               e.preventDefault();
-              // validateInputText(refInputTexto, datosNuevo, setError, error); //////////////////////////////////
-              // validateInputAltura(refAlturaMin, refAlturaMax, setError, error);
-              // validateInputPeso(refpesoMin, refpesoMax, setError, error);
-
               temperamentos.length > 0
                 ? setError({
                     ...error,
