@@ -14,7 +14,6 @@ import {
   clearTemperamentos,
   getOrdenamientos,
   clearOrdenamientos,
-  // deleteRaza,
 } from "../actions/index";
 
 function Home() {
@@ -39,11 +38,7 @@ function Home() {
   const datosTemperamentoslista = useSelector(
     (state) => state.temperamentosLista
   );
-  // const eliminarRaza = function (id, nombre, data) {
-  //   dispatch(deleteRaza({ id, nombre }));
 
-  //   data = data.filter((x) => x.id !== id);
-  // };
   function setRazasValue(e, value) {
     setRazas({
       ordenamientos: false,
@@ -123,7 +118,7 @@ function Home() {
       dispatch(clearTemperamentos());
       dispatch(clearOrdenamientos());
     };
-  }, [dispatch, paginado, razas]); // resultadoRazaLista
+  }, [dispatch, paginado, razas]);
 
   return (
     <div className="home">
@@ -256,12 +251,7 @@ function Home() {
         </div>
       </div>
       <div className="home__render">
-        {razas.busqueda && (
-          <BuquedaRazaLista
-            data={resultadoRazaLista}
-            //eliminarRaza={eliminarRaza}
-          />
-        )}
+        {razas.busqueda && <BuquedaRazaLista data={resultadoRazaLista} />}
         {razas.busquedaTemperamentos && (
           <Ordenamientos datos={datosTemperamentoslista} />
         )}

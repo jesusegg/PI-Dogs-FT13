@@ -2,7 +2,7 @@ const axios = require("axios");
 //trae todo del backend
 export function getDatosCompletos(pagina) {
   return function (dispatch) {
-    return fetch("http://localhost:3001/?page=" + pagina)
+    return fetch("https://dogs-breeds-jesus.herokuapp.com/?page=" + pagina)
       .then((response) => response.json())
       .then((json) => {
         dispatch({ type: "GET_DATOS_COMPLETOS", payload: json }); //no
@@ -13,7 +13,7 @@ export function getDatosCompletos(pagina) {
 //estado de paginado principal a-z
 export function getRazasPaginado(page) {
   return function (dispatch) {
-    return fetch("http://localhost:3001/dogs/?page=" + page) //no
+    return fetch("https://dogs-breeds-jesus.herokuapp.com/dogs/?page=" + page) //no
       .then((response) => response.json())
       .then((json) => {
         dispatch({ type: "GET_RAZAS_PAGINADO", payload: json });
@@ -25,7 +25,7 @@ export function getRazasPaginado(page) {
 export function getRazaDetail(id) {
   return function (dispatch) {
     axios
-      .get("http://localhost:3001/dogs/" + id)
+      .get("https://dogs-breeds-jesus.herokuapp.com/dogs/" + id)
       .then((response) => {
         dispatch({ type: "GET_RAZA_DETAIL", payload: response.data });
       })
@@ -47,7 +47,7 @@ export function cleardetalle() {
 export function getTemperamentosLista(busqueda, page, sort, peso) {
   return function (dispatch) {
     return fetch(
-      `http://localhost:3001/temperament/?busqueda=${busqueda}&page=${page}&peso=${peso}&listado=${sort}`
+      `https://dogs-breeds-jesus.herokuapp.com/temperament/?busqueda=${busqueda}&page=${page}&peso=${peso}&listado=${sort}`
     )
       .then((response) => response.json())
       .then((json) => {
@@ -66,7 +66,7 @@ export function clearTemperamentos() {
 //estado de temperamentos
 export function getTemperamentos() {
   return function (dispatch) {
-    return fetch("http://localhost:3001/temperament")
+    return fetch("https://dogs-breeds-jesus.herokuapp.com/temperament")
       .then((response) => response.json())
       .then((json) => {
         dispatch({ type: "GET_TEMPERAMENTOS", payload: json });
@@ -77,7 +77,7 @@ export function getTemperamentos() {
 export function getOrdenamientos(raza, page, listado, peso) {
   return function (dispatch) {
     return axios(
-      `http://localhost:3001/dogs/?page=${page}&${
+      `https://dogs-breeds-jesus.herokuapp.com/dogs/?page=${page}&${
         raza !== undefined ? `raza=${raza}` : "nada"
       }&listado=${listado}&peso=${peso}`
     )
@@ -102,7 +102,7 @@ export function clearOrdenamientos() {
 //estado de crear perro
 export function postRaza(data) {
   return function (dispatch) {
-    return fetch("http://localhost:3001/dog", {
+    return fetch("https://dogs-breeds-jesus.herokuapp.com/dog", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
@@ -119,7 +119,7 @@ export function postRaza(data) {
 
 export function deleteRaza(data) {
   return function (dispatch) {
-    return fetch("http://localhost:3001/dog", {
+    return fetch("https://dogs-breeds-jesus.herokuapp.com/dog", {
       method: "DELETE",
       body: JSON.stringify(data),
       headers: {
