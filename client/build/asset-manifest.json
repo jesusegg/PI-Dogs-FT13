@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/static/css/main.49e9200f.chunk.css",
+    "main.js": "/static/js/main.4bdc60e8.chunk.js",
+    "main.js.map": "/static/js/main.4bdc60e8.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.ec5d571d.js",
+    "runtime-main.js.map": "/static/js/runtime-main.ec5d571d.js.map",
+    "static/js/2.b10e00df.chunk.js": "/static/js/2.b10e00df.chunk.js",
+    "static/js/2.b10e00df.chunk.js.map": "/static/js/2.b10e00df.chunk.js.map",
+    "static/js/3.9ac8b1df.chunk.js": "/static/js/3.9ac8b1df.chunk.js",
+    "static/js/3.9ac8b1df.chunk.js.map": "/static/js/3.9ac8b1df.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.49e9200f.chunk.css.map": "/static/css/main.49e9200f.chunk.css.map",
+    "static/js/2.b10e00df.chunk.js.LICENSE.txt": "/static/js/2.b10e00df.chunk.js.LICENSE.txt",
+    "static/media/1544764567.5a210ed8.svg": "/static/media/1544764567.5a210ed8.svg",
+    "static/media/app.scss": "/static/media/pexels-lumn-406014.a29a3234.jpg",
+    "static/media/logo perros.8508f8d1.png": "/static/media/logo perros.8508f8d1.png",
+    "static/media/perro.db76c056.jpeg": "/static/media/perro.db76c056.jpeg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ec5d571d.js",
+    "static/js/2.b10e00df.chunk.js",
+    "static/css/main.49e9200f.chunk.css",
+    "static/js/main.4bdc60e8.chunk.js"
+  ]
+}
