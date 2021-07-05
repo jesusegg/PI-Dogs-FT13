@@ -49,7 +49,7 @@ __IMPORTANTE__: Para poder utilizar esta API externa es necesario crearse una cu
 - [ ] React
 - [ ] Redux
 - [ ] Express
-- [ ] Sequelize - Postgres
+- [ ] Sequelize - PostgreSQL
 
 ---
 [<img alt="" src="https://github.com/jesusegg/Jesusegg/blob/main/img/dogs.jpg" />](https://dogs-breeds-jesus-a6d82.web.app/Dogs/Home)
