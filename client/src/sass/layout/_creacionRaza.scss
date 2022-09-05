@@ -120,3 +120,20 @@
 .boton__add {
   padding: 0.2rem 1rem;
 }
+@media (max-width: 800px) {
+  .creacionRaza {
+    .contenedor__form > div {
+      margin: 1.3rem;
+    }
+
+    .boton__add {
+      margin: 1rem;
+      padding: 0.5rem 1rem;
+    }
+  }
+}
+@media (max-width: 600px) {
+  .creacionRaza {
+    height: 120rem;
+  }
+}

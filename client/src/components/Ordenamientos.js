@@ -23,8 +23,8 @@ function Ordenamientos({ datos }) {
                 <img
                   src={x.imagen ? x.imagen : img}
                   alt="imagen"
-                  width="360px"
-                  height="250px"
+                  // width="360px"
+                  // height="250px"
                 />
               </Link>{" "}
               <Link

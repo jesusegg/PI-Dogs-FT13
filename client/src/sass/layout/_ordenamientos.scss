@@ -5,6 +5,10 @@
   gap: 1rem;
   margin-left: 1rem;
   width: 98%;
+  img {
+    width: 360px;
+    height: 250px;
+  }
 
   .ordenamientos__tarjeta {
     border-radius: 2rem;
@@ -65,4 +69,39 @@
   cursor: pointer;
   padding-top: 0.5rem;
   text-align: start;
+}
+@media (max-width: 800px) {
+  .ordenamientos {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 1rem;
+    margin-left: 1rem;
+    width: 98%;
+    width: 55rem;
+    img {
+      width: 100%;
+      height: 130px;
+    }
+  }
+}
+@media (max-width: 600px) {
+  .ordenamientos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    width: 98%;
+    width: 26rem;
+    .ordenamientos__tarjeta {
+      width: 12rem;
+      a {
+        font-size: 1.4rem;
+      }
+
+      p {
+        width: 95%;
+        font-size: 1.4rem;
+      }
+    }
+  }
 }

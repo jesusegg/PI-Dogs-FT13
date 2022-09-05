@@ -18,3 +18,29 @@
     }
   }
 }
+@media (max-width: 800px) {
+  .navegacion {
+    height: 9rem;
+
+    .navegacion__enlaces {
+      margin-left: 25rem;
+      gap: 1rem;
+      a {
+        margin-left: 2rem;
+      }
+    }
+  }
+}
+@media (max-width: 600px) {
+  .navegacion {
+    height: 9rem;
+
+    .navegacion__enlaces {
+      margin-left: 2rem;
+      gap: 1rem;
+      a {
+        margin-left: 2rem;
+      }
+    }
+  }
+}

@@ -24,9 +24,12 @@ const { Raza, Temperamento } = require("./src/db.js");
 //console.log(Raza);
 
 // Syncing all the models at once.
-conn.sync({ force: true }).then(() => {
-  server.listen(3001, () => {
-    fulldb();
-    console.log("%s listening at 3001"); // eslint-disable-line no-console
-  });
-});
+conn
+  .sync({ force: true })
+  .then(() => {
+    server.listen(process.env.PORT || 3001, () => {
+      fulldb();
+      console.log("%s listening at 3001"); // eslint-disable-line no-console
+    });
+  })
+  .catch((e) => console.error(e));
